@@ -1,0 +1,29 @@
+{
+  "name": "hscroll-slider",
+  "version": "1.0.0",
+  "description": "Turns a horizontally scrollable area into a slider",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "minify hscroll-slider.js > hscroll-slider.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvgeniyMukhamedjanov/hscroll-slider.git"
+  },
+  "keywords": [
+    "slider",
+    "carousel",
+    "horizontal",
+    "scroll",
+    "slideshow"
+  ],
+  "author": "Evgeniy Mukhamedjanov (https://github.com/EvgeniyMukhamedjanov)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvgeniyMukhamedjanov/hscroll-slider/issues"
+  },
+  "homepage": "https://github.com/EvgeniyMukhamedjanov/hscroll-slider#readme",
+  "devDependencies": {
+    "minify": "^9.1.0"
+  }
+}

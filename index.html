@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo hscroll-slider</title>
+  <style type="text/css">
+    body {
+      /*max-width: 1024px;*/
+      margin: 0 auto;
+    }
+
+    .slider {
+      position: relative;
+    }
+
+    .slider__scrollable-area {
+      overflow: auto;
+      display: flex;
+      gap: 20px;
+    }
+    hscroll-slider[scrollable] .slider__scrollable-area {
+      scrollbar-width: none;
+    }
+    hscroll-slider[scrollable] .slider__scrollable-area::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider__slide {
+      width: 200px;
+      flex: 0 0 200px;
+      height: 100px;
+      background-color: #cccccc;
+    }
+
+    .slider__scroll-track {
+      width: 100%;
+      position: relative;
+      height: 5px;
+      background-color: #cccccc;
+      display: none;
+    }
+
+    .slider__scroll-track--hiding {
+      opacity: 0;
+      transition: opacity .15s;
+    }
+
+    hscroll-slider[scrolling] .slider__scroll-track--hiding {
+      opacity: 1;
+    }
+
+    hscroll-slider[scrollable] .slider__scroll-track {
+      display: block;
+    }
+
+    .slider__scroll-track:before {
+      content: '';
+      position: absolute;
+      width: var(--hscroll-slider-thumb-width, 0);
+      left: var(--hscroll-slider-thumb-shift, 0);
+      top: 0;
+      height: 100%;
+      background-color: blue;
+    }
+
+    .slider__scroll-progress {
+      width: 100%;
+      position: relative;
+      height: 5px;
+      background-color: #cccccc;
+      display: none;
+    }
+
+    hscroll-slider[scrollable] .slider__scroll-progress {
+      display: block;
+    }
+
+    .slider__scroll-progress:before {
+      content: '';
+      position: absolute;
+      width: var(--hscroll-slider-scroll-progress, 0);
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: blue;
+    }
+
+    .slide__button {
+      display: none;
+    }
+
+    hscroll-slider[scrollable] .slide__button {
+      display: block;
+      opacity: .6;
+    }
+
+    hscroll-slider[scrollable-left] .slide__button--prev {
+      opacity: 1;
+    }
+    hscroll-slider[scrollable-right] .slide__button--next {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slider">
+    <div class="slider__scrollable-area">
+      <div class="slider__slide"></div>
+      <div class="slider__slide"></div>
+      <div class="slider__slide"></div>
+      <div class="slider__slide"></div>
+      <div class="slider__slide"></div>
+      <div class="slider__slide"></div>
+    </div>
+  </div>
+
+  <hscroll-slider 
+    area-selector=".slider__scrollable-area" 
+    slide-selector=".slider__slide"
+    prev-btn-selector=".slide__button--prev"
+    next-btn-selector=".slide__button--next"
+  >
+    <div class="slider">
+      <div class="slider__scrollable-area">
+        <div class="slider__slide"></div>
+        <div class="slider__slide"></div>
+        <div class="slider__slide"></div>
+        <div class="slider__slide"></div>
+        <div class="slider__slide"></div>
+        <div class="slider__slide"></div>
+      </div>
+      <button class="slide__button slide__button--prev">Prev</button>
+      <button class="slide__button slide__button--next">Next</button>
+      <div class="slider__scroll-track"></div>
+      <div class="slider__scroll-track slider__scroll-track--hiding"></div>
+      <div class="slider__scroll-progress"></div>
+    </div>
+  </hscroll-slider>
+
+  <script src="./hscroll-slider.js"></script>
+</body>
+</html>
