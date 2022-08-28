@@ -5,71 +5,244 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demo hscroll-slider</title>
   <style type="text/css">
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
     body {
-      /*max-width: 1024px;*/
-      margin: 0 auto;
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  </style>
+
+
+  <style type="text/css">
+    :root {
+      --container-side-space: 3.5rem;
+      --body-top-space: 4.5rem;
+      --slide-gap: 1.5rem;
+    }
+    body {
+      font-family: "Arial", sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: var(--body-top-space) 0;
+    }
+
+    header {
+      margin-bottom: 4.5rem;
+      font-size: 2.5rem;
+      width: 51rem;
+      max-width: calc(100% - 20rem);
+      line-height: 1.2;
+      box-sizing: border-box;
+    }
+
+    header p {
+      display: inline;
+    }
+
+    header a {
+      position: fixed;
+      z-index: 1;
+      right: var(--container-side-space);
+      top: var(--body-top-space);
+      line-height: 1.4;
+      font-family: 'Arial Black', 'Arial', sans-serif;
+      font-weight: 900;
+      padding: .75rem 2rem .65rem;
+      border: .1875rem solid black;
+      border-radius: 1000rem;
+      font-size: .75rem;
+      display: block;
+      color: black;
+      text-transform: uppercase;
+      letter-spacing: .365em;
+      text-decoration: none;
+      transition: all .3s;
+    }
+    header a:hover {
+      background-color: black;
+      color: white;
+    }
+
+    hr {
+      margin-top: 6rem;
+      margin-bottom: 6rem;
+      border: 1px solid #C0C0C0;
+    }
+
+    h1 {
+      font-family: 'Arial Black', 'Arial', sans-serif;
+      font-weight: 900;
+      display: inline;
     }
 
     .slider {
       position: relative;
     }
 
-    .slider__scrollable-area {
+    h2 {
+      font-family: 'Arial Black', 'Arial', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      margin-top: 6rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      display: flex;
+      font-size: .875rem;
+      font-weight: 700;
+      color: #606060;
+      line-height: 1.2;
+      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      margin-top: 3rem;
+    }
+    h3:after {
+      content: '';
+      display: block;
+      flex: 1 1 auto;
+      height: 1px;
+      background-color: #e9e9e9;
+      margin-left: 1rem;
+    }
+    h3 b {
+      color: black;
+    }
+
+    .container {
+      padding: 0 var(--container-side-space);
+    }
+
+    .scrollable-area {
       overflow: auto;
       display: flex;
-      gap: 20px;
+      padding-bottom: .7rem;
     }
-    hscroll-slider[scrollable] .slider__scrollable-area {
+    hscroll-slider[scrollable] .scrollable-area {
       scrollbar-width: none;
     }
-    hscroll-slider[scrollable] .slider__scrollable-area::-webkit-scrollbar {
+    hscroll-slider[scrollable] .scrollable-area::-webkit-scrollbar {
       display: none;
     }
 
-    .slider__slide {
-      width: 200px;
-      flex: 0 0 200px;
-      height: 100px;
-      background-color: #cccccc;
+    .slide {
+      width: calc(29% - var(--slide-gap));
+      flex: 0 0 calc(29% - var(--slide-gap));
+      background-color: #E7E7E7;
+      text-align: center;
+      margin-right: var(--slide-gap);
+      box-sizing: border-box;
+      padding: 3rem var(--slide-gap);
+      font-size: .875rem;
+    }
+    .slide:last-child {
+      margin-right: 0;
+    }
+    .slide--full {
+      width: 100%;
+      flex-basis: 100%;
+      margin-right: 0;
+    }
+    .slide--full:nth-child(2n) {
+      background-color: #deddf1;
     }
 
-    .slider__scroll-track {
+    .slide-icon {
+      margin-bottom: .5rem;
+    }
+    .slide-icon svg {
+      width: auto;
+      height: 1rem;
+    }
+
+    .slider__scroll-track,
+    .slider__scroll-progress {
       width: 100%;
       position: relative;
-      height: 5px;
-      background-color: #cccccc;
+      height: .2rem;
+      margin: 0 auto;
+      background-color: #E7E7E7;
       display: none;
+      border-radius: 100rem;
+      transition: all .15s;
     }
-
+    .slider__scroll-track--promo {
+      width: 95%;
+    }
     .slider__scroll-track--hiding {
       opacity: 0;
       transition: opacity .15s;
     }
-
     hscroll-slider[scrolling] .slider__scroll-track--hiding {
       opacity: 1;
     }
-
-    hscroll-slider[scrollable] .slider__scroll-track {
+    hscroll-slider[scrollable] .slider__scroll-track,
+    hscroll-slider[scrollable] .slider__scroll-progress {
       display: block;
     }
-
     .slider__scroll-track:before {
       content: '';
       position: absolute;
       width: var(--hscroll-slider-thumb-width, 0);
       left: var(--hscroll-slider-thumb-shift, 0);
       top: 0;
-      height: 100%;
-      background-color: blue;
+      bottom: 0;
+      background: #adadad;
+      border-radius: 100rem;
+      transition: top .3s, bottom .3s, opacity .3s;
     }
-
-    .slider__scroll-progress {
-      width: 100%;
-      position: relative;
-      height: 5px;
-      background-color: #cccccc;
-      display: none;
+    .slider__scroll-track--promo:before {
+      background: linear-gradient(45deg, #939ae1, #c774c9);
+      opacity: .6;
+      top: -1px;
+      bottom: -1px;
+    }
+    hscroll-slider[scrolling] .slider__scroll-track--promo:before {
+      top: -2px;
+      bottom: -2px;
+      opacity: 1;
     }
 
     hscroll-slider[scrollable] .slider__scroll-progress {
@@ -83,61 +256,343 @@
       left: 0;
       top: 0;
       height: 100%;
-      background-color: blue;
+      background: #adadad;
+      border-radius: 100rem;
     }
 
-    .slide__button {
-      display: none;
+    .buttons-wrapper {
+      visibility: hidden;
+      opacity: 0;
+    }
+    .buttons-wrapper--top {
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      width: 4.5rem;
+      position: absolute;
+      top: -3rem;
+      right: 0;
+      padding-left: 1rem;
     }
 
-    hscroll-slider[scrollable] .slide__button {
-      display: block;
-      opacity: .6;
+    .button {
+      opacity: .4;
+      transition: all .15s;
+      position: relative;
+      border: 1px solid black;
+      background-color: transparent;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 100%;
+      overflow: hidden;
+      text-indent: -1000rem;
+    }
+    .button:after {
+      content: '';
+      position: absolute;
+      width: .5rem;
+      height: .5rem;
+      border: 1px solid currentColor;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      transform: rotate(45deg) translateY(.1rem) translateX(-.1rem);
+    }
+    .button-prev:after {
+      transform: rotate(-135deg) translateY(.1rem) translateX(-.1rem);
+    }
+    .buttons-wrapper--side .button {
+      position: absolute;
+      left: var(--slide-gap);
+      top: calc(50% - 0.5rem);
+      margin-top: -1rem;
+    }
+    .buttons-wrapper--side .button-next {
+      right: var(--slide-gap);
+      left: auto;
     }
 
-    hscroll-slider[scrollable-left] .slide__button--prev {
+    hscroll-slider[scrollable] .buttons-wrapper {
+      visibility: visible;
       opacity: 1;
     }
-    hscroll-slider[scrollable-right] .slide__button--next {
+
+    hscroll-slider[scrollable-left] .button-prev {
       opacity: 1;
+    }
+    hscroll-slider[scrollable-right] .button-next {
+      opacity: 1;
+    }
+    hscroll-slider[scrollable-left] .button-prev:hover,
+    hscroll-slider[scrollable-right] .button-next:hover {
+      background-color: black;
+      color: white;
+      cursor: pointer;
+    }
+    hscroll-slider[scrollable-left] .button-prev:active,
+    hscroll-slider[scrollable-right] .button-next:active {
+      transform: scale(.8);
+    }
+
+    hscroll-slider .slide--promo:first-child {
+      background-color: #c7ccff;
+    }
+    hscroll-slider .slide--promo:nth-child(2) {
+      background-color: #BAFFAF;
+    }
+    hscroll-slider .slide--promo:nth-child(3) {
+      background-color: #FFF0A0;
+    }
+    hscroll-slider .slide--promo:nth-child(4) {
+      background-color: #FFC7C7;
+    }
+    hscroll-slider .slide--promo:nth-child(5) {
+      background-color: #F0B8EB;
+    }
+    hscroll-slider .slide--promo:nth-child(6) {
+      background-color: #70E2F1;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Hscroll-slider</h1>
+      <p>— a custom element that turnes a regular scrollable area into a slider.</p>
+      <a href="#">Docs/download</a>
+    </header>
+  </div>
 
-  <div class="slider">
-    <div class="slider__scrollable-area">
-      <div class="slider__slide"></div>
-      <div class="slider__slide"></div>
-      <div class="slider__slide"></div>
-      <div class="slider__slide"></div>
-      <div class="slider__slide"></div>
-      <div class="slider__slide"></div>
+  <h3 class="container">Regular scrollable area</h3>
+  <div class="container">
+    <div class="slider">
+      <div class="scrollable-area">
+        <div class="slide">Slide 1</div>
+        <div class="slide">Slide 2</div>
+        <div class="slide">Slide 3</div>
+        <div class="slide">Slide 4</div>
+        <div class="slide">Slide 5</div>
+        <div class="slide">Slide 6</div>
+      </div>
     </div>
   </div>
 
-  <hscroll-slider 
-    area-selector=".slider__scrollable-area" 
-    slide-selector=".slider__slide"
-    prev-btn-selector=".slide__button--prev"
-    next-btn-selector=".slide__button--next"
-  >
-    <div class="slider">
-      <div class="slider__scrollable-area">
-        <div class="slider__slide"></div>
-        <div class="slider__slide"></div>
-        <div class="slider__slide"></div>
-        <div class="slider__slide"></div>
-        <div class="slider__slide"></div>
-        <div class="slider__slide"></div>
+  <h3 class="container"><span>Scrollable area with <b>hscroll-slider</b></span></h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg width="49" height="16" viewBox="0 0 49 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.75 1C22.9489 1 23.1397 1.07902 23.2803 1.21967C23.421 1.36032 23.5 1.55109 23.5 1.75V8C23.5 8.13261 23.5527 8.25979 23.6464 8.35355C23.7402 8.44732 23.8674 8.5 24 8.5C24.1326 8.5 24.2598 8.44732 24.3535 8.35355C24.4473 8.25979 24.5 8.13261 24.5 8V5.467L24.586 5.463C24.903 5.451 25.223 5.455 25.402 5.49C25.536 5.517 25.696 5.586 25.85 5.672C25.927 5.714 26 5.819 26 5.986V8C26 8.13261 26.0527 8.25979 26.1464 8.35355C26.2402 8.44732 26.3674 8.5 26.5 8.5C26.6326 8.5 26.7598 8.44732 26.8535 8.35355C26.9473 8.25979 27 8.13261 27 8V6.435L27.106 6.425C27.422 6.401 27.69 6.415 27.814 6.465C27.932 6.511 28.114 6.672 28.3 6.895C28.381 6.991 28.45 7.085 28.5 7.154V8.5C28.5 8.63261 28.5527 8.75979 28.6464 8.85355C28.7402 8.94732 28.8674 9 29 9C29.1326 9 29.2598 8.94732 29.3535 8.85355C29.4473 8.75979 29.5 8.63261 29.5 8.5V7.5H29.842C29.9817 7.5 30.1199 7.52929 30.2477 7.58599C30.3754 7.64269 30.4899 7.72553 30.5836 7.82917C30.6774 7.93282 30.7483 8.05497 30.792 8.18773C30.8356 8.3205 30.851 8.46094 30.837 8.6L30.566 11.315C30.531 11.6639 30.423 12.0016 30.249 12.306L28.854 14.748C28.8103 14.8245 28.7471 14.8881 28.6709 14.9324C28.5947 14.9766 28.5081 15 28.42 15H22.118C22.0252 15 21.9343 14.9742 21.8553 14.9254C21.7764 14.8767 21.7125 14.8069 21.671 14.724L20.439 12.259L17.927 8.074C17.8624 7.9658 17.8396 7.83775 17.8628 7.71392C17.8861 7.59008 17.9537 7.47899 18.053 7.4015C18.1524 7.32402 18.2766 7.28548 18.4024 7.29312C18.5281 7.30076 18.6467 7.35406 18.736 7.443L21.146 9.853C21.2158 9.92305 21.3049 9.97079 21.4019 9.99019C21.499 10.0096 21.5995 9.99977 21.691 9.96198C21.7824 9.92418 21.8606 9.86011 21.9156 9.77788C21.9706 9.69564 22 9.59894 22 9.5V1.75C22 1.55109 22.079 1.36032 22.2197 1.21967C22.3603 1.07902 22.5511 1 22.75 1V1ZM24.5 4.466V1.75C24.5 1.28587 24.3156 0.840752 23.9874 0.512563C23.6592 0.184374 23.2141 0 22.75 0C22.2859 0 21.8407 0.184374 21.5125 0.512563C21.1844 0.840752 21 1.28587 21 1.75V8.293L19.443 6.736C19.181 6.47548 18.833 6.31951 18.4642 6.29737C18.0954 6.27522 17.7312 6.38843 17.4399 6.61574C17.1487 6.84305 16.9504 7.16884 16.8823 7.53196C16.8142 7.89509 16.8809 8.27059 17.07 8.588L19.561 12.741L20.776 15.171C20.9006 15.4202 21.0922 15.6297 21.3292 15.7761C21.5662 15.9226 21.8394 16.0001 22.118 16H28.42C28.6844 15.9999 28.9441 15.9299 29.1727 15.7972C29.4013 15.6644 29.5908 15.4736 29.722 15.244L31.117 12.803C31.3609 12.3763 31.5121 11.903 31.561 11.414L31.832 8.699C31.8598 8.42097 31.829 8.14019 31.7417 7.87478C31.6543 7.60936 31.5123 7.36519 31.3248 7.15801C31.1373 6.95083 30.9085 6.78524 30.6531 6.67191C30.3977 6.55857 30.1214 6.50001 29.842 6.5H29.261C29.1985 6.41535 29.1335 6.33264 29.066 6.252C28.875 6.023 28.556 5.684 28.186 5.536C27.822 5.39 27.34 5.404 27.028 5.428L26.896 5.44C26.7895 5.16747 26.5915 4.94049 26.336 4.798C26.1059 4.66532 25.8571 4.56822 25.598 4.51C25.288 4.448 24.859 4.452 24.548 4.464L24.5 4.466Z" fill="black"/>
+                <path d="M48.3536 9.35355C48.5488 9.15829 48.5488 8.84171 48.3536 8.64645L45.1716 5.46447C44.9763 5.2692 44.6597 5.2692 44.4645 5.46447C44.2692 5.65973 44.2692 5.97631 44.4645 6.17157L47.2929 9L44.4645 11.8284C44.2692 12.0237 44.2692 12.3403 44.4645 12.5355C44.6597 12.7308 44.9763 12.7308 45.1716 12.5355L48.3536 9.35355ZM38 9.5L48 9.5L48 8.5L38 8.5L38 9.5Z" fill="black"/>
+                <path d="M0.646447 8.64645C0.451184 8.84171 0.451184 9.15829 0.646447 9.35355L3.82843 12.5355C4.02369 12.7308 4.34027 12.7308 4.53553 12.5355C4.7308 12.3403 4.7308 12.0237 4.53553 11.8284L1.70711 9L4.53553 6.17157C4.7308 5.97631 4.7308 5.65973 4.53553 5.46447C4.34027 5.2692 4.02369 5.2692 3.82843 5.46447L0.646447 8.64645ZM11 8.5L1 8.5V9.5L11 9.5V8.5Z" fill="black"/>
+              </svg>
+            </div>
+            Drag-and-Drop support
+          </div>
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_10_122)">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M1 8C1 9.85652 1.7375 11.637 3.05025 12.9497C4.36301 14.2625 6.14348 15 8 15C9.85652 15 11.637 14.2625 12.9497 12.9497C14.2625 11.637 15 9.85652 15 8C15 6.14348 14.2625 4.36301 12.9497 3.05025C11.637 1.7375 9.85652 1 8 1C6.14348 1 4.36301 1.7375 3.05025 3.05025C1.7375 4.36301 1 6.14348 1 8V8ZM16 8C16 10.1217 15.1571 12.1566 13.6569 13.6569C12.1566 15.1571 10.1217 16 8 16C5.87827 16 3.84344 15.1571 2.34315 13.6569C0.842855 12.1566 0 10.1217 0 8C0 5.87827 0.842855 3.84344 2.34315 2.34315C3.84344 0.842855 5.87827 0 8 0C10.1217 0 12.1566 0.842855 13.6569 2.34315C15.1571 3.84344 16 5.87827 16 8V8ZM4.5 7.5C4.36739 7.5 4.24021 7.55268 4.14645 7.64645C4.05268 7.74021 4 7.86739 4 8C4 8.13261 4.05268 8.25979 4.14645 8.35355C4.24021 8.44732 4.36739 8.5 4.5 8.5H10.293L8.146 10.646C8.09951 10.6925 8.06264 10.7477 8.03748 10.8084C8.01232 10.8692 7.99937 10.9343 7.99937 11C7.99937 11.0657 8.01232 11.1308 8.03748 11.1916C8.06264 11.2523 8.09951 11.3075 8.146 11.354C8.19249 11.4005 8.24768 11.4374 8.30842 11.4625C8.36916 11.4877 8.43426 11.5006 8.5 11.5006C8.56574 11.5006 8.63084 11.4877 8.69158 11.4625C8.75232 11.4374 8.80751 11.4005 8.854 11.354L11.854 8.354C11.9006 8.30755 11.9375 8.25238 11.9627 8.19163C11.9879 8.13089 12.0009 8.06577 12.0009 8C12.0009 7.93423 11.9879 7.86911 11.9627 7.80837C11.9375 7.74762 11.9006 7.69245 11.854 7.646L8.854 4.646C8.80751 4.59951 8.75232 4.56264 8.69158 4.53748C8.63084 4.51232 8.56574 4.49937 8.5 4.49937C8.43426 4.49937 8.36916 4.51232 8.30842 4.53748C8.24768 4.56264 8.19249 4.59951 8.146 4.646C8.09951 4.69249 8.06264 4.74768 8.03748 4.80842C8.01232 4.86916 7.99937 4.93426 7.99937 5C7.99937 5.06574 8.01232 5.13084 8.03748 5.19158C8.06264 5.25232 8.09951 5.30751 8.146 5.354L10.293 7.5H4.5Z" fill="black"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_10_122">
+                <rect width="16" height="16" fill="white"/>
+                </clipPath>
+                </defs>
+              </svg>
+            </div>
+            "Prev" and "Next" buttons
+          </div>
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-window-desktop" viewBox="0 0 16 16">
+                <path d="M3.5 11a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-9Z"/>
+                <path d="M2.375 1A2.366 2.366 0 0 0 0 3.357v9.286A2.366 2.366 0 0 0 2.375 15h11.25A2.366 2.366 0 0 0 16 12.643V3.357A2.366 2.366 0 0 0 13.625 1H2.375ZM1 3.357C1 2.612 1.611 2 2.375 2h11.25C14.389 2 15 2.612 15 3.357V4H1v-.643ZM1 5h14v7.643c0 .745-.611 1.357-1.375 1.357H2.375A1.366 1.366 0 0 1 1 12.643V5Z"/>
+              </svg>
+            </div>
+            Custom scrollbar
+          </div>
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+              </svg>
+            </div>
+            No impact on appearance
+          </div>
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-life-preserver" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm6.43-5.228a7.025 7.025 0 0 1-3.658 3.658l-1.115-2.788a4.015 4.015 0 0 0 1.985-1.985l2.788 1.115zM5.228 14.43a7.025 7.025 0 0 1-3.658-3.658l2.788-1.115a4.015 4.015 0 0 0 1.985 1.985L5.228 14.43zm9.202-9.202-2.788 1.115a4.015 4.015 0 0 0-1.985-1.985l1.115-2.788a7.025 7.025 0 0 1 3.658 3.658zm-8.087-.87a4.015 4.015 0 0 0-1.985 1.985L1.57 5.228A7.025 7.025 0 0 1 5.228 1.57l1.115 2.788zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+              </svg>
+            </div>
+            Doesn't break if JavaScript is not loaded
+          </div>
+          <div class="slide slide--promo">
+            <div class="slide-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box" viewBox="0 0 16 16">
+                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+              </svg>
+            </div>
+            4.52 KB minimized
+          </div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--top">
+          <button class="button button-prev">Prev</button>
+          <button class="button button-next">Next</button>
+        </div>
+        <div class="slider__scroll-track slider__scroll-track--promo"></div>
+        <!-- <div class="slider__scroll-track slider__scroll-track--hiding"></div> -->
+        <!-- <div class="slider__scroll-progress"></div> -->
       </div>
-      <button class="slide__button slide__button--prev">Prev</button>
-      <button class="slide__button slide__button--next">Next</button>
-      <div class="slider__scroll-track"></div>
-      <div class="slider__scroll-track slider__scroll-track--hiding"></div>
-      <div class="slider__scroll-progress"></div>
-    </div>
-  </hscroll-slider>
+    </hscroll-slider>
+  </div>
+  <h2 class="container">Styling</h2>
+  <p class="container">Hscroll-slider doesn't apply any CSS styles to your scrollable area, so the appearance is up to you.</p>
+
+  <h3 class="container"><span>"Progress" type scrollbar</span></h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide">Slide 1</div>
+          <div class="slide">Slide 2</div>
+          <div class="slide">Slide 3</div>
+          <div class="slide">Slide 4</div>
+          <div class="slide">Slide 5</div>
+          <div class="slide">Slide 6</div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--top">
+          <button class="button button-prev">Prev</button>
+          <button class="button button-next">Next</button>
+        </div>
+        <div class="slider__scroll-progress"></div>
+      </div>
+    </hscroll-slider>
+  </div>
+
+  <h3 class="container"><span>Show scrollbar while scrolling</span></h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide">Slide 1</div>
+          <div class="slide">Slide 2</div>
+          <div class="slide">Slide 3</div>
+          <div class="slide">Slide 4</div>
+          <div class="slide">Slide 5</div>
+          <div class="slide">Slide 6</div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--top">
+          <button class="button button-prev">Prev</button>
+          <button class="button button-next">Next</button>
+        </div>
+        <div class="slider__scroll-track slider__scroll-track--hiding"></div>
+      </div>
+    </hscroll-slider>
+  </div>
+
+  <h3 class="container"><span>Off screen</span></h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide">Slide 1</div>
+          <div class="slide">Slide 2</div>
+          <div class="slide">Slide 3</div>
+          <div class="slide">Slide 4</div>
+          <div class="slide">Slide 5</div>
+          <div class="slide">Slide 6</div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--top">
+          <button class="button button-prev">Prev</button>
+          <button class="button button-next">Next</button>
+        </div>
+        <div class="slider__scroll-track"></div>
+      </div>
+    </hscroll-slider>
+  </div>
+
+  <h3 class="container"><span>Buttons on sides</span></h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide">Slide 1</div>
+          <div class="slide">Slide 2</div>
+          <div class="slide">Slide 3</div>
+          <div class="slide">Slide 4</div>
+          <div class="slide">Slide 5</div>
+          <div class="slide">Slide 6</div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--side">
+          <button class="button button-prev button">Prev</button>
+          <button class="button button-next button">Next</button>
+        </div>
+        <div class="slider__scroll-track"></div>
+      </div>
+    </hscroll-slider>
+  </div>
+
+  <h3 class="container">Full width slides</h3>
+  <div class="container">
+    <hscroll-slider 
+      area-selector=".scrollable-area" 
+      slide-selector=".slide"
+      prev-btn-selector=".button-prev"
+      next-btn-selector=".button-next"
+    >
+      <div class="slider">
+        <div class="scrollable-area">
+          <div class="slide slide--full">Slide 1</div>
+          <div class="slide slide--full">Slide 2</div>
+          <div class="slide slide--full">Slide 3</div>
+          <div class="slide slide--full">Slide 4</div>
+          <div class="slide slide--full">Slide 5</div>
+          <div class="slide slide--full">Slide 6</div>
+        </div>
+        <div class="buttons-wrapper buttons-wrapper--side">
+          <button class="button button-prev button">Prev</button>
+          <button class="button button-next button">Next</button>
+        </div>
+        <div class="slider__scroll-track"></div>
+      </div>
+    </hscroll-slider>
+  </div>
 
   <script src="./hscroll-slider.js"></script>
 </body>
