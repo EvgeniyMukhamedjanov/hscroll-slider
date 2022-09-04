@@ -19,6 +19,13 @@ const cssVars = {
   scrollProgress: 'hscroll-slider-scroll-progress'
 }
 
+const defaultSelectors = {
+  area: '[data-hscroll-slider-area]',
+  slide: '[data-hscroll-slider-slide]',
+  prevButton: '[data-hscroll-slider-button-prev]',
+  nextButton: '[data-hscroll-slider-button-next]'
+}
+
 if (!customElements.get('hscroll-slider')) {
   customElements.define('hscroll-slider',class HScrollSlider extends HTMLElement {
     constructor() {
@@ -68,7 +75,7 @@ if (!customElements.get('hscroll-slider')) {
 
     initScrollableArea() {
       let $scrollableArea = null;
-      const scrollableAreaSelector = this.getAttribute(attributes.areaSelector);
+      const scrollableAreaSelector = this.getAttribute(attributes.areaSelector) || defaultSelectors.area;
       if (scrollableAreaSelector) {
         $scrollableArea = this.querySelector(scrollableAreaSelector);
       }
@@ -134,7 +141,7 @@ if (!customElements.get('hscroll-slider')) {
 
     initSlides() {
       let $slides = [];
-      const slideSelector = this.getAttribute(attributes.slideSelector);
+      const slideSelector = this.getAttribute(attributes.slideSelector) || defaultSelectors.slide;
       if (slideSelector && this._props.$scrollableArea) {
         $slides = [...this._props.$scrollableArea.querySelectorAll(slideSelector)];
       }
@@ -146,7 +153,7 @@ if (!customElements.get('hscroll-slider')) {
         this._props.$buttons = [];
       }
 
-      const prevButtonSelector = this.getAttribute(attributes.prevButtonSelector);
+      const prevButtonSelector = this.getAttribute(attributes.prevButtonSelector) || defaultSelectors.prevButton;
       if (prevButtonSelector) {
         this.querySelectorAll(prevButtonSelector).forEach($button => {
           if (this._props.$buttons.includes($button)) return;
@@ -157,7 +164,7 @@ if (!customElements.get('hscroll-slider')) {
         })
       }
 
-      const nextButtonSelector = this.getAttribute(attributes.nextButtonSelector);
+      const nextButtonSelector = this.getAttribute(attributes.nextButtonSelector) || defaultSelectors.nextButton;
       if (nextButtonSelector) {
         this.querySelectorAll(nextButtonSelector).forEach($button => {
           if (this._props.$buttons.includes($button)) return;
@@ -231,6 +238,7 @@ if (!customElements.get('hscroll-slider')) {
     }
 
     renderCssVars() {
+      if (!this._props.$scrollableArea) return;
       let thumbWidth = 100;
       let thumbShift = 0;
       let scrollProgress = 0;
@@ -252,7 +260,9 @@ if (!customElements.get('hscroll-slider')) {
     }
 
     renderAttributes() {
-      const $scrollableArea = this._props.$scrollableArea
+      const $scrollableArea = this._props.$scrollableArea;
+      if (!$scrollableArea) return;
+
       const isScrollable = $scrollableArea.scrollWidth > $scrollableArea.clientWidth;
       if (isScrollable) {
         this.setAttribute(attributes.scrollable, '');
