@@ -116,3 +116,11 @@ hscroll-slider:not([scrollable-right]) .button-next{
 }
 </style>
 ```
+
+## Add custom scrollbar
+
+1. Add an Html element that is going to be a custom scrollbar,
+1. add CSS:
+   1. hide default scrollbar
+   1. style the custom scrollbar element using the `--hscroll-slider-thumb-width` and the `--hscroll-slider-thumb-shift` CSS variabled provided by Hscroll-slider (in order to create a "progress" type scrollbar use the `--hscroll-slider-scroll-progress`),
+   1. hide the custom scrollbar if the area doesn't have scroll.
