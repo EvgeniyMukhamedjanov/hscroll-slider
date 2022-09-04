@@ -1,4 +1,4 @@
-Hscroll-slider
+# Hscroll-slider
 
 A custom element that turns a regular scrollable area into a slider.
 
@@ -91,6 +91,5 @@ Hscroll-slider is installed! Now the mouse drag-and-drop functionality is activa
   width: 25%;
   flex: 0 0 25%;
 }
-</style>
 </style>
 ```
