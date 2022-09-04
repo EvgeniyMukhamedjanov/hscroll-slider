@@ -33,9 +33,9 @@ In order to improve apply Hscroll-slider:
 1. add the `data-hscroll-slider-area` attribute to the scrollable area (the one with `overflow: auto`).
 
 ```html
-<!-- 2. wrap the scrollable area in the `hscroll-slider` tag -->
-<!-- 3. specify the scrollable area css selector -->
+<!-- 2. Wrap the scrollable area in the "hscroll-slider" tag -->
 <hscroll-slider>
+  <!-- 3. Add the "data-hscroll-slider-area" attribute to the scrollable area -->
   <div class="scrollable-area" data-hscroll-slider-area>
     <div class="slide">1</div>
     <div class="slide">2</div>
@@ -57,7 +57,7 @@ In order to improve apply Hscroll-slider:
 }
 </style>
 
-<!-- 1. download the `hscroll-slider.min.js` file and include it in your page -->
+<!-- 1. Download the `hscroll-slider.min.js` file and include it in your page -->
 <script src="/path/to/hscroll-slider.min.js"></script>
 ```
 
@@ -65,12 +65,16 @@ Hscroll-slider is installed! Now the mouse drag-and-drop functionality is activa
 
 ## Add buttons
 
-1. Add html elements for the "next slide", "previous slide" buttons with the `data-hscroll-slider-button-prev` and `data-hscroll-slider-button-next` attributes accordingly,
-2. Add the `data-hscroll-slider-slide` attribute to each slide.
+1. Add the `data-hscroll-slider-slide` attribute to each slide,
+1. add html elements for the "next slide", "previous slide" buttons with the `data-hscroll-slider-button-prev` and `data-hscroll-slider-button-next` attributes accordingly,
+1. add CSS:
+   1. to show buttons only if the scrollable area is actually scrollable using the `scrollable` attribute provided by Hscroll-slider,
+   1. to make buttons look active or disabled depending on the scroll position using the `scrollable-left` and `scrollable-right` attributes provided by Hscroll-slider.
 
 ```html
 <hscroll-slider>
   <div class="scrollable-area" data-hscroll-slider-area>
+    <!-- 1. Add the `data-hscroll-slider-slide` attribute to each slide -->
     <div class="slide" data-hscroll-slider-slide>1</div>
     <div class="slide" data-hscroll-slider-slide>2</div>
     <div class="slide" data-hscroll-slider-slide>3</div>
@@ -78,8 +82,13 @@ Hscroll-slider is installed! Now the mouse drag-and-drop functionality is activa
     <div class="slide" data-hscroll-slider-slide>5</div>
     <div class="slide" data-hscroll-slider-slide>6</div>
   </div>
-  <button data-hscroll-slider-button-prev>Previous slide</button>
-  <button data-hscroll-slider-button-next>Next slide</button>
+  <!-- 2. Add html elements for the "next slide", "previous slide" buttons -->
+  <button class="button button-prev" data-hscroll-slider-button-prev>
+    Previous slide
+  </button>
+  <button class="button button-next" data-hscroll-slider-button-next>
+    Next slide
+  </button>
 </hscroll-slider>
 
 <style>
@@ -90,6 +99,20 @@ Hscroll-slider is installed! Now the mouse drag-and-drop functionality is activa
 .slide {
   width: 25%;
   flex: 0 0 25%;
+}
+
+/* 3.i. Show buttons only if the area is scrollable */
+.button {
+  display: none;
+}
+hscroll-slider[scrollable] .button {
+  display: block;
+}
+
+/* 3.ii. Make buttons look disabled if the area is scrolled till the beginning or till the end  */
+hscroll-slider:not([scrollable-left]) .button-prev,
+hscroll-slider:not([scrollable-right]) .button-next{
+  opacity: .6
 }
 </style>
 ```
