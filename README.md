@@ -206,3 +206,70 @@ hscroll-slider[scrollable] .scrollbar:before {
 }
 </style>
 ```
+
+## Configuration
+
+Hscroll-slider uses html attributes for configuration.
+
+### `area-selector`
+Defines the selector of a scrollable area. Default value is `[data-hscroll-slider-area]`.
+By default Hscroll-slider tries to find a scrollable area element with the `data-hscroll-slider-area` attribute. If you can't add this attribute to the scrollable area, use the `area-selector` attribute to define your own selector.
+
+```html
+<hscroll-slider 
+  area-selector=".scrollable-area"
+>
+  <div class="scrollable-area">
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+  </div>
+</hscroll-slider>
+```
+
+### `slide-selector`
+Defines the selector of slides. Default value is `[data-hscroll-slider-slide]`.
+By default Hscroll-slider tries to find slide elements with the `data-hscroll-slider-slide` attribute. If you can't add this attribute to the slides, use the `slide-selector` attribute to define your own selector.
+
+```html
+<hscroll-slider 
+  area-selector=".scrollable-area"
+  slide-selector=".slide"
+>
+  <div class="scrollable-area">
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+  </div>
+</hscroll-slider>
+```
+
+### `prev-btn-selector`, `next-btn-selector`
+Define the selector of buttons. Default values are `[data-hscroll-slider-button-prev]` and `[data-hscroll-slider-button-next]`.
+By default Hscroll-slider tries to find button elements with the `data-hscroll-slider-button-prev` and `data-hscroll-slider-button-next` attributes. If you can't add this attribute to the buttons, use the `prev-btn-selector` and the `next-btn-selector` attributes to define your own selectors.
+
+```html
+<hscroll-slider 
+  area-selector=".scrollable-area"
+  slide-selector=".slide"
+  prev-btn-selector=".button-prev"
+  next-btn-selector=".button-next"
+>
+  <div class="scrollable-area">
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+  </div>
+  <button class="button button-prev">Prev</button>
+  <button class="button button-next">Next</button>
+</hscroll-slider>
+```
