@@ -276,7 +276,7 @@ By default Hscroll-slider tries to find button elements with the `data-hscroll-s
 
 ## Read-only attributes
 
-All the read-only attibutes gets added to the `hscroll-slider` tag.
+All the read-only attibutes get added to the `hscroll-slider` tag.
 
 ### `scrollable`
 Appears if the scrollable area is long enough so it requires a scrollbar. You can show buttons and custom scrollbars if this attribute exists.
@@ -307,5 +307,76 @@ Appears if a user is scrolling the scrollable area. You can hide a custom scroll
 }
 hscroll-slider[scrolling] .scrollbar {
   opacity: 1;
+}
+```
+
+## CSS variables
+All the CSS variables get applied to the `hscroll-slider` tag.
+
+### `--hscroll-slider-thumb-width`
+The variable is intended to be used for building a regular custom scrollbar. The value is the width of the scrollbar thumb as a percentage of the scrollbar track width.
+```css
+hscroll-slider[scrollable] .scrollbar {
+  width: 100%;
+  position: relative;
+  height: 4px;
+  margin: 10px auto;
+  background-color: #E7E7E7;
+  border-radius: 1000px;
+}
+hscroll-slider[scrollable] .scrollbar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #adadad;
+  border-radius: 1000px;
+  left: var(--hscroll-slider-thumb-shift, 0);
+  width: var(--hscroll-slider-thumb-width, 0);
+}
+```
+
+### `--hscroll-slider-thumb-shift`
+The variable is intended to be used for building a regular custom scrollbar. The value is the left point of the scrollbar thumb as a percentage of the scrollbar track width.
+```css
+hscroll-slider[scrollable] .scrollbar {
+  width: 100%;
+  position: relative;
+  height: 4px;
+  margin: 10px auto;
+  background-color: #E7E7E7;
+  border-radius: 1000px;
+}
+hscroll-slider[scrollable] .scrollbar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #adadad;
+  border-radius: 1000px;
+  left: var(--hscroll-slider-thumb-shift, 0);
+  width: var(--hscroll-slider-thumb-width, 0);
+}
+```
+
+### `--hscroll-slider-scroll-progress`
+The variable is intended to be used for building a "progress" type custom scrollbar. The value is how far the content is scrolled as a percentage.
+```css
+hscroll-slider[scrollable] .scrollbar {
+  width: 100%;
+  position: relative;
+  height: 4px;
+  margin: 10px auto;
+  background-color: #E7E7E7;
+  border-radius: 1000px;
+}
+hscroll-slider[scrollable] .scrollbar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #adadad;
+  border-radius: 1000px;
+  width: var(--hscroll-slider-scroll-progress, 0);
 }
 ```
