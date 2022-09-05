@@ -252,7 +252,7 @@ By default Hscroll-slider tries to find slide elements with the `data-hscroll-sl
 
 ### `prev-btn-selector`, `next-btn-selector`
 Define the selector of buttons. Default values are `[data-hscroll-slider-button-prev]` and `[data-hscroll-slider-button-next]`.
-By default Hscroll-slider tries to find button elements with the `data-hscroll-slider-button-prev` and `data-hscroll-slider-button-next` attributes. If you can't add this attribute to the buttons, use the `prev-btn-selector` and the `next-btn-selector` attributes to define your own selectors.
+By default Hscroll-slider tries to find button elements with the `data-hscroll-slider-button-prev` and `data-hscroll-slider-button-next` attributes. If you can't add these attributes to the buttons, use the `prev-btn-selector` and the `next-btn-selector` attributes to define your own selectors.
 
 ```html
 <hscroll-slider 
@@ -272,4 +272,40 @@ By default Hscroll-slider tries to find button elements with the `data-hscroll-s
   <button class="button button-prev">Prev</button>
   <button class="button button-next">Next</button>
 </hscroll-slider>
+```
+
+## Read-only attributes
+
+All the read-only attibutes gets added to the `hscroll-slider` tag.
+
+### `scrollable`
+Appears if the scrollable area is long enough so it requires a scrollbar. You can show buttons and custom scrollbars if this attribute exists.
+```css
+hscroll-slider[scrollable] .buttons {
+  display: block;
+}
+```
+
+### `scrollable-left`, `scrollable-right`
+Appears if it is possible to scroll the scrollable area to the left/right. You can make "Previous"/"Next" buttons look disabled/enabled according to these attributes.
+```css
+.button-prev,
+.button-next {
+  opacity: .6;
+}
+hscroll-slider[scrollable-left] .button-prev,
+hscroll-slider[scrollable-right] .button-next {
+  opacity: 1;
+}
+```
+
+### `scrolling`
+Appears if a user is scrolling the scrollable area. You can hide a custom scrollbar by default and show it when a user starts scrolling the slider if it is reqiured by a design.
+```css
+.scrollbar {
+  opacity: 0;
+}
+hscroll-slider[scrolling] .scrollbar {
+  opacity: 1;
+}
 ```
