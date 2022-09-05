@@ -197,10 +197,11 @@ hscroll-slider[scrollable] .scrollbar:before {
   border-radius: 1000px;
   
   /* Regular style: */
-  width: var(--hscroll-slider-thumb-width, 0);
   left: var(--hscroll-slider-thumb-shift, 0);
+  width: var(--hscroll-slider-thumb-width, 0);
   
   /* Progress style: */
+  /* left: 0; */
   /* width: var(--hscroll-slider-scroll-progress); */
 }
 </style>
