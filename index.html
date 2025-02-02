@@ -485,7 +485,9 @@
           <div class="slide">
             <img src="https://placehold.co/1024x768" loading="lazy" width="1024" height="768" />
             <script>
-              document.currentScript.previousElementSibling.setAttribute('loading', 'eager');
+              if (window.matchMedia('(min-width: 1024px)').matches) {
+                document.currentScript.previousElementSibling.setAttribute('loading', 'eager');
+              }
             </script>
           </div>
           <div class="slide">Slide 2</div>
