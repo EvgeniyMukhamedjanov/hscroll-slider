@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Gallery - Different Formats</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .gallery-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .gallery-table th,
+      .gallery-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+      }
+
+      .gallery-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      td.title-cell {
+        padding-top: 80px;
+        text-align: left;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Photo Gallery - Different Formats</h1>
+    <table class="gallery-table" id="photoGallery">
+      <thead id="tableHeader"></thead>
+      <tbody id="photoTableBody"></tbody>
+    </table>
+
+    <script>
+      // const photos = [
+      //   "Photo.jpg",
+      //   "Photo-1.jpg",
+      //   "Photo-2.jpg",
+      //   "Photo-3.jpg",
+      //   "Photo-4.jpg",
+      //   "Photo-5.jpg",
+      //   "Photo-6.jpg",
+      //   "Photo-7.jpg",
+      //   "Photo-8.jpg",
+      //   "Photo-9.jpg",
+      //   "Photo-10.jpg",
+      //   "Photo-11.jpg",
+      //   "Photo-12.jpg",
+      //   "Photo-13.jpg",
+      //   "Photo-14.jpg",
+      //   "Photo-15.jpg",
+      //   "Photo-16.jpg",
+      //   "Photo-17.jpg",
+      //   "Photo-18.jpg",
+      //   "Photo-19.jpg",
+      //   "Photo-20.jpg",
+      //   "Photo-21.jpg",
+      //   "Photo-22.jpg",
+      //   "Photo-23.jpg",
+      //   "Photo-24.jpg",
+      //   "Photo-25.jpg",
+      //   "Photo-26.jpg",
+      //   "Photo-27.jpg",
+      //   "Photo-28.jpg",
+      //   "Photo-29.jpg",
+      //   "Photo-30.jpg",
+      //   "Photo-31.jpg",
+      //   "Photo-32.jpg",
+      //   "Photo-33.jpg",
+      //   "Photo-34.jpg",
+      //   "Photo-35.jpg",
+      //   "Photo-36.jpg",
+      //   "Photo-37.jpg",
+      //   "Photo-38.jpg",
+      //   "Photo-39.jpg",
+      //   "Photo-40.jpg",
+      //   "Photo-41.jpg",
+      //   "Photo-42.jpg",
+      //   "Photo-43.jpg",
+      //   "Photo-44.jpg",
+      //   "Photo-45.jpg",
+      //   "Photo-46.jpg",
+      //   "Photo-47.jpg",
+      //   "Photo-48.jpg",
+      //   "Photo-49.jpg",
+      //   "Photo-50.jpg",
+      //   "Photo-51.jpg",
+      //   "Photo-52.jpg",
+      //   "Photo-53.jpg",
+      //   "Photo-54.jpg",
+      //   "Photo-55.jpg",
+      // ];
+
+      const photos = [
+        {
+          type: "title",
+          value: "Зал обзор",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGcew07P1aFz9/ni-wxkl0SFVzssgFj8oLcIXpZDuirxKl/x8sM6QF4QQkkO4w5jkxZvnjvGr1SB2Ge/Fd241H9rkKry1mb8fZ06h4JrlNYn87CF/HYEG_fCZHNgId00-YCPu5-xvDR9MLTIC/mfiNqKtRbd1fQiLy5roOnf2ncyIvQKaW/I9iLeHQ5ShnnlWcmOCVe74PabIKTwJsC/tP_-FVqNQn8o9AFDPBse__th8DLFS3kL/FGXDAB6Qf5tm2Hmvq9_9QsyXt6F88WJE/cKyztMUzUVg.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "img-edit/Photo-25-zoom.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGWyGznISM_Q9/gp-Fux-icCb2F7P8wScrewxvgUwXWoz9/t8SSA7DB5tkvC9vrPyr09RWAPn8lOgaq/TKgzUPJYwa9HVVqH5okxLKKEXAItQcpk/DTisanWKA23ucMzneTpyOM4Aot5orAKy/CR8KuuRNaMDnON5xUo5lW25L6BlmOyPh/pzlbAsUQ67zvmOdJKmPCyrPsmuTlLomk/xnrIGN2ENPGp93270gVYSQaOyW3Y5lUf/jWtorSBtUaFIQZOokuYh1PW2HPFlFi1C/kgi40WFF4MA.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "img-edit/Photo-27-rect.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGaosbc70Lwcw/GbUxFYl38m3tY6QHYsF2eU-Gkx73wGDg/DIhLRL7kFy5LhlBVh3Osjwx8jJaj0oos/ISKobhVZaWEiT2j1aouh0CgBRH0ugpM8/SVr7-FyyXgxwqoyuRuMnFv5oxTC4ze9I/48UCH4Bri0WnUvUvrzYiJ7ObYNNQI2of/fjGYpIB61y48MreU3xLoGQ3io7TtVyUo/n8YD2dC5yJ_TYWwfr8CX12ZIBbQpGNOx/b-2lr4Kud2YBSwqwaxAwCPU0hFAhSMmQ/fkNj7SjD-Y8.jpg",
+        },
+
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGftRGhBz67CR/Jhl-qWzUU3FTvlFZ-WR9vsBR-6M-q1P5/fH7RdPgcYCV2iyD2ZwIfQ0YTjre86Jl_/Mj62cX9Y86OxLc9NTyVPZr6AAZ7GPTcI/j5CbIZooUts0SwZNoDGXAI6b1X9AcdKF/YMl3LACoh3qMWaC9YG_yOO9pW19KnKgf/JAd5yOaxv-n9ZF4Y3F16J-k6hbHIa2bB/U89hkgyengVhGaNk2_v3xSoCT-bBiytu/g1WdYVbj5iCEi_LEf2sYR95NVpLYc_Co/9iZ8L9re8w0.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGWo-y9r8vEgr/6Pj57yk4i-7M72f3k7-tLTZVkeZQLcuk/lbuAn9vEKk9QUtd2wCQWUo1s7scS1t0f/3l0gsauMsQKIoQjVqBy8dFiQYMQuUoWa/KYVjU8jGoIoNaZlXEdRQVQSSSFk7Edt6/L3D2HWJwDizFpdvMsJ66flStvsSX--Jv/Q1DBKBmVH4O0_xSBY2Ho6SIEo933RwHr/4RdQqZmIN58Aw9pwY7DxMPiXohBFJNuz/EIZA3mSst8ASIpq1V6TMjMsMxsKjFWZ-/O7EZjsKqfQc.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGRfJujJJBk4n/i50gBJHvA4HU8xfQeg0M8j82uxIAFZte/v8jgDT8I1yhwNqXNLXgUSEFdSv7SRdqz/3qdIMC33Jg-v9o2PJkToliHx-LvWz6gU/9apAq5au274ylV8Qz6KBRce4MNqU5YtC/TgNok7EQXa-0_tb0PCKnstjB04ln1lUO/mbZgIVM4tHy9uCdgeQBNb1YUyY5JNZJR/qnsQ2l-dFZUZCB6zS2urrcNSOK7dLvf0/KCzABE0MKcZnKzXg3EABgTovaZ9WAqtf/FY8qFvDimcs.jpg",
+        },
+
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGWaDBnbvnRcj/jpkoopSzH46QPtW07s5EMHZ59_L7AHBJ/-8BVtc5uO6rHyZfpO9eTuPKPWY-u-65f/XlY9HznADHDsRYg25WfFtJPBxJeK0lp9/cLez-si3fOr_lIqNvj7eGaHpefrwi9Y_/JpXbuRH8oYRVggjEoK_HVU0zl_H55eUO/COmz8QNNQTh9e5gGxFhV6QxmHeSND3vX/Dh6R-RFIH6jVFRRkbG7sHJwpUTY_4EXx/wRhnzxde1PrFCa800hNArnJ7e-nlht3j/uH_4E7z4NZE.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGQvFPULHwBbx/9FL8URaEbM_JF2TPNMMwK-5ihZbeAyNf/K3E__ERd9BXSPB_V8JU74DwbtoWOxqYh/tBt6rwjxAV8JdJZIad_DAsa9oUk2VncK/DbOijIm0eAXga6PjA_ceGdwwwSHEG5x3/1aU1ikeKsNMYa_CkBb1_aJNWPHHFvA3V/_ndpBMn8ULjt4NxhJG7sX8X83pDR5JZ0/o3XOe3vHpHAxdCKA2KFkPFo5P2rzJnhJ/Nrkprj3DweuHWP6TL6mqHfKpXCEDaK2h/2zkRUKRmxTI.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGSvDvhRi5diL/ejLSb8uJL1BpuehnO2RYcaf35ng8ZcMI/uJWbKC0QZaegzm5FZnHJm0lYHwXshIiy/4OWem4QFgZdbSYnoCkVbHbWj1j6nvMAy/TGPkrm61pEkad23xadsBgRoxgrMznCJ3/si96OBsCRV8t8OLhtn6P5haOaMSYGvYL/qbaCJ6FpDi2qH5_6JAGuwtZIbZfBpgvX/RHDZCd7Y6xHkjTCo7uDxKFl1NRDExYoY/CKJEqoRNsvr99rNhTHW4UhdRHzGsM5ou/hPelsC4lmxo.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGSEg8M3u49sP/692ScsCqDXf_ndcarTYgHKJxH-M9x52f/jZ3dt1lkiZ75p4Lzdk7tI-MpQfsI_CQj/dXswKo-c-A3tZo8JzvQMv0ifxGc151VN/PhlxHQhvEd5J5j7GePCykf03SXMcCPZH/O-zbADJsKDb_p7wohw8jMwXNK9pXJDXd/iC3g1R8M_HikmGy2EGoFHOVsQNITNWkF/3K5mtDwr8gr2U607AbQ6i8teH-4aVNts/PGk-S-7bnTJeVe5dnSVe8r-TZjvHt6yJ/Hzb0FUDUzBw.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGUieM_NwdZYR/d-iYoCMHhb2RgktFNVo0bWvAJjdoV1M1/EZlvMVpuPS9wiZFQ6Vf853c99HFKz4dy/_hg4biMuabKPISw-ZwXVcm9pIZeAFrfo/x8w25CaUDbb6-afxWLagPnUbRq25HD3a/i3jiof5l5_-QuSN5D4y7afqpOntOUAF5/y0up33BKzZmGdczLx2A-0VVvCCeEoDXI/703VFPgeWXndnwXE7arsg_HREjYO_zmV/E9S8jk84P5hX1bngHsGHu5HRsY3_IGPV/Tkp3TbHUcck.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGcqwyCT1kmlA/ofIeDLZ3YEzRKsEAGH2RIfxWHgMEopa2/VsRL553QQzVlCkVQ_S07B1qOQkXbQwds/rgUNEYp3xzXHx9PB5KReIUNjXW_X-N3C/SXUM7brU96EZGzREGrNSTR-KlUf_x35d/jwuR8tYHqeLFabwBSlhx4AI4YpfsM5ET/DVFgj_SZcXkUa5LyTvCjw1mzlppkA3w1/ElCGJ02OsDyZ5qUmfeNhhHTo2WifAO6v/1WAS2oubL-Q5bJbHt_T0qmLVacTkF4RT/NOBYp9X328s.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGb6WAHRS-3Mv/p1Ez4JGb97BH0zQ5uSzIjYmkXKtUaUxH/zXxDBGAlrrbNIKaalsG6zcHbYFXqbUtr/BznOUOY1iTm3fQJMjrk_-8a773bo_C81/EQICEbIQC4StfCT2j9OOaQiIGW4WtMbV/xK3wLeBpjkAurB0BmreKULjk8HlGP9QU/xyKDM50hrn-jV25AFhvddkj48l0gqd6y/bjOQ1tjNkMkoPT5q31CF63QY7rXFwgsl/1j4IAyEn-pbnrqxlOWbFR33iDTIWvDdC/35wGGLLgPiY.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGUcq5URk-luJ/JBwQTq7kIs7hY9n3u0WWP-B-bwpTWry1/-aEgpOhKEx8fhp9g5ynhQRvAqMVjs3av/3-qv-588NRt9cK5glyvKVw7rsY-0UAEZ/cKAuPtreXuhztmMpHgY3mHFfQPl9F5du/AM51m8MD8Y9ENjEQF8jjo6_nnOIDSToM/RQjXkVLitedUOfW98nqWnanQFYwmmRB7/UazFxEsoRrbRcIRy7Q-CreEqhH83-M1M/dfVeEuoUccZq3ke6Mp05107Yr19dP4Nw/yRiSrZwlpRc.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGeWbPyd602K4/844OI7fcs17w7J56HefB2oaogP--_8tk/YFVuzqUSlIekJqIyfQQBFOCZDqqs9o-n/6eOiJ-hjKIo2HmSLHQMCJTEArrt8wZ7A/8geFB9fPLKhaV9eVskXd3-RJPj2E-Caz/sy7B2J_Pfdg8ziEdKUGVKf0OjQU9Av8N/7Z-SLSXpjDcQNSfhSpdM2o4voZphgdjo/8a0l6jfticwZmd-ahLpQAIKv6aOn6WM-/O0I5iZXYPBTA8TsF6X3ktOn_jQwGJC5V/6W6OxJ3Mlww.jpg",
+        },
+        {
+          type: "title",
+          value: "Спальня обзор",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGVF44hQvUV2u/Z40ppcfh2aOkUpxVOuFHkBiLcO_8Echc/KdOVci-QOAwZW5BJ5aC73IC6ogc3_RbO/lpIuJ80Ry0qXAGawAaYPZ8fNNJHkeI25/pqFzaNyyjUzGw9QBEiACFAW__luKozYn/Ivsck0h2PRM6CiHnA91VZeQ3XI1mW8zb/Il2KcfWFjZf4554oEueClt4o2cFcCDQv/KFpMmOKhL_cINrM-x10id1Wp5kmqG90u/VPKmg9Zy-xY4KFnW5b4v6IncHH0W8yGm/yEXJ0WMn5vI.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGeCtDk3blSk4/em0CTlkLAWQ18HJXsXmx35x1Te9vTPdb/YOJcJkcunE3aTMFunB4eghBzY5h4Qg5U/_b4a42Ljq9rAFoFysKG7_ddmzRoUOwl8/iCQj6BMqhPqJwok0pwHRdMuAL73dwbfy/8jJ9HS0Xl_yDu-tf1zy7srEpPsGiiAG1/Np4SlneLUKpJwsSNub2P8xamVZHmbfJ0/t6er_0H4XXT01vdeTJKvDdgj-F7jTSxr/uej63SZ83ijAnQB_lMi1QtHNJan6dMDy/lI4vzolH4sk.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGSNYvHafHi_F/qd8a6RjgiDxnxP49F1IWw4YfR4g_AlOd/U6A8OexZIpKoGCJG3q7TEl7y9-NLcoCz/e_UDrDmEz38tXVuMU0SyCdvygGFZMPos/Seh2o9hGfBjZsLEMdd1Dbzm81IjfEoQZ/w8plxxt2mmKg4iOaO_5-gctQ9Fs0NLkq/zEGGlDzpEpoLQ-KZsDuXpqhXffE3FsMo/Nv7akC-c6j5AOiYO8bMgcFae0Bo_MHeE/GcsEBRALL9gLcjbFQ87nCa1qhuQ6aNQr/AKAsziadUqc.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGTpex9Zai2oG/4t3KfKP8H1PTPzpvNU828ixUWHBiEYYj/efTzD4huJPCopHOBp3wvkvQu2IAfSKLJ/yRZJsbG0MOtxyFLTq-JA5p5GoDuy7IVQ/9BCTVD5ywsGtamFI3eXLDmRxXaWgoC4z/FB55ZKPK9fCjqCWLyUbSsUKKyufZUrTM/cVm_DgsJls-IW36F_9GGSV2zPSc4wmdk/gzwAQZxNVaa1rVsJcsk2sdN_ebCRWnft/DZOYfQlsp4fNkkelVcJ474bK83L2Zwpl/QWc5r0_GBvA.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGZ0vm513KmGZ/yk5jOkQ0lNSOABgzdS_68bub98O6NJ30/sLY5mJtEg-T6l8-zxcYhwyLvteYKBxu8/mc0eXp2wVQlI1q34rc5_CeLuqour-Q0F/DOSfuJiL7ZDpfHKtKDYiS9z6d830heKl/VTzKM9EbgdbRRHQY0Tcu2BVWajsD5JjK/NxN88CCyiCer6IVpdThe10lwJSwmmUQ_/qeEra1LXQXqjCG9NHK45kjC2zKku7bse/NLfc_-XN1eIbytWv8u0x6v11Yq2sOeae/24qBw-CODRE.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGTlkyygxTg9C/l0mvAQfi1RMSKH0ghEDrCzZbvDTrYl8W/nmVpFi7kS3cFssXfPMjbVOTT1w78t18Q/9_mVjchoIu5SQGPZF7w7PU6BQwGpBQe6/lVS-sA8IJeOGI_JmriVYIzK-7j6H_E4A/3paoeuVF293JPAw3RS-aOORGzM-HS52t/z6VLST1NXjiEnOY873qhNGgjAn15ASQ4/P1MdeZdGqTx0YN1ievx4DLs9B0Jw0Uwu/SyHo_z0pJUL2JQJknGNw-Y2sJbU64xWg/DN5TWDhRPRk.jpg",
+        },
+        {
+          type: "title",
+          value: "Спальня детали",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGdR53pXzB_YM/ySuA36-iZFdUrE9USU1EzU0WGNpJNrNW/glz6MFCQAYAklwammwaGKktpeuFAhFz1/z2i8XQdaJ-Ku1VGbAMe2ILAULQ8O55ND/Efsnq9Nak0kGq6jmd1_YC9pOVemYBcg7/boLyD6-GniQWVYVHskRZbRBNLw_vfIGf/pLBeeyhI0LcYfl2c9ZQ2YkduFR0SCHZV/3V6rOQqmbfBhv-FkPTw62avV5xxs40Gr/m0B7tr1LNtOf6FkC6s3liCx37BMZtfzo/Stl38sF5vpg.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGfZg1iCQtMkL/bdjVdYi9c7Rm6Agee9y66WZrNIjbfjom/0Jdm9J44vdr4WXIIRf-ZU1O3FMMZH77z/Q8egPw3xmTB4rsj8CfWFPBUc8bxpdSZy/QbSAqHUYViUBr74BXo6G1rd791ljlh5C/KfzPlRlCo-KB3YDIO7bhWURDmlk3F-oo/YKoF2D1OltCumzFv57UTwMJPZq6dTBp9/ckLxm5SybZG3rg8B5HsVN2uFeVXmFiGU/ndDJp_gY-QuHR2vsWF_tezRig2GJZsx4/jR16VPQLCzw.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGaUGoekuxNaA/7899QuSjh9xWcKyEJAMXPZBbBpZunzsC/NK4lXwli3IAPvGAhjjD5iG8CmM3JUaYK/nlih66ACHkYDyoIwwJabOPPZqxQu3Apz/aNo0usAAvOfZKXzhWTg5mvs3MCF84pu5/nT_scqLFI14iDri2DDxiiMm71ym9Vwl0/LydBh36mlLz3M_SkD1UzkMeCORAvAbno/FhTsusI1HivOH88eJ5TBESz8Pq237RaK/Ccy_TNLGU2fU9OALsAjGJ7lpuUkDI554/ts5icfcHNjE.jpg",
+        },
+        {
+          type: "title",
+          value: "Кухня обзор",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGRwyUzZg93ZR/iNF5UAMv5n_2vRUhE0uDlPtGd7b14OGk/j3LWGw-RbPNw586cln3FtRYdJngMZvjs/2a_SOtvU4zQsaSdO4kxmm5WpX3NUM6JW/ApJyIAP5Nkk6C6LJjeFOznKv1frHY0Hb/7hHLhj28HYn9OZ8JeevmCL0mNF9bQyTj/j7PU3j39f3aiK1qPpWm9XSkphjTwgnE1/Ru9kyfkkTF0dXGyFEkz_b-X9dikuc2h6/ysLKX-CGk4iSeO5NGZpKaUUBRODe1ZFW/Y3b86nIc43A.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGcd1ndm9PL_w/7W9ywK-pWHD4BP-EBt2zPvfK_nlI3_BB/Wnch3qtnIFCa5dQcxw6ihQP1-J50729r/gGiwdpoHPk7fW4WRLpMV1IJBbLTNwvoS/Lz5p9qJzJ4KclCtt3c1AHDt9xI1kLk7-/8c8EecYdaJqTE_uUiLaIs6cXZFXe-qem/Q5L___KL5Cc2W-MoBtURoMoFoOElujc4/c7BLrXBoIeRJFqIbO9rpElMa8iCtwlJ4/tu4RLZh5C46Vhr71y9SxWg9DeqGkNYsJ/XAB4Tv68erc.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGYtqvcdCJuJa/Rz_UqiykcSSNa8ovIFejTlLZYREhZV9w/dkGtGg2A1NqZDRVT8eBR9adxgE5BHgoQ/_EtrBwgWV7-RZM4vPmX6QWn1QoT0pYQk/XR8CHAUwelIz0yfv7p18JSQB0sBK7UCv/EMc52PzN5gi40U9EO7iZOq-M6moh8UgF/5VHuzpGMbIvfNgvn_xWokifBqG-hRZO6/ZdY54FZpCj_pJ4BBnhoHXyNCDvKJUT7m/ddZ8WZx9IGqpd7N6gw4zGxXyo37wtYfG/BFagwI6xJRM.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGaH3lVjvOVOG/Dpxa_Rgky68i4xv75a2y3yJnf4zOb0TB/vJHOiOXM0VEiDdpakpOic4hKIt2X3srP/rk3Xk9AZSlQLftoYOFHnQd0xCAxEB70a/PDZ2Owr1lAvKqBAdpQGkd10zf2RW3ynG/b2Rly7xzsCOnqPmNE861I-sEEtKrHeCj/tHiX8TD9iWF9YjGn8A7ixYvSX3l3PLSy/Dc2VDDPu0GFwH6isK1GPQjEFWjh7ymW3/aZsa2a5-bNGz-3RH6L4KRrOB4hyhoF7-/L3-yjoBZYj0.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGQhn5VTjby6x/ngCS_IpjHW1HHUNZJZZYrTfNAJ81llh0/eDAl4d_HFAQfFPeu9ydK9zLr9U75Tdce/tKGGgJtAp47DVAp5Z1w0fM7ZuFstC9yX/mR_3dXPeYylkGRdIl21YwoHCn0qAfo_w/X-65qNnA3RxoygoPHhERw0t_YPlbK4c6/139jf9n4GTUl-w4CDVyqF4oRllM4y5Ig/48diYs7Frf4TNrztQLaDIOtqVmXKQw5v/sACKTVE80juRYSC-XQUjo5onlmYYtMGb/sD8xdbkk5Ds.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGSg1KEa3C5pS/DPM0Lmaij4KUQsxXiXw-3VeO9okOOxxb/XYQaR0eoWMK-cHw0Qk3LlkyfFeQ_XFnK/Y8134On3dhosvM4vfFrRufcZATJ7LYcn/uqTKf3z91U-zIcrWPVG-Q9UWeoAUfoub/V2WKyw6ioZ1fxswfDIcque5xMTC5a9uJ/ZIAwVwtBnRZ5oNWL6azVGi4FTMviWRLG/W8hDbQumF2kYMqKrd2Xn0qNtIax2Rs3y/60zMjnUiA7Ykkm8qjfUjRClvPT87bsoX/_lOaBpdWiT8.jpg",
+        },
+        {
+          type: "title",
+          value: "Кухня детали",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGUJ-Pp90qKeJ/jCObyl-g7u3NW9ZomwXAjhULfQuHfRwh/SqXidfcsPvSXigNLgbqlSWEUO6HR67P3/7kMImdae8wL1xUuLbtpslrN14-fsZUB8/Ls3zfhDbpfK6BCddaYeCwRszWGQtsct4/kpbfQLg8gZMAcS8CX7MVXWqAa1TUjYoA/u8DEZSXOZcdoOpbaBL0H02J9MduhA3g4/PgbTa40ZnoAQtv3ErzDRLM5Kmobc1_hx/TJgyfKN0Ng-Wyr0l4suhcwE712fkPqnX/6bNXPBDHDXw.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGS2M4-n2Z21J/bXLLFfgUQOtdXZc_eIhpAx2_L7-zKBQN/MjsZ56xOeMh9emNfIWqngt42xb9BPCpV/ChvGV7Z3fWvO4TrIdxcrdVKcgTSwe1oU/KRxWM_hrbYdpoTCzqjuGIGll-gCxQTii/bwQK87K7lePDdwrqlBsRDypkZ1dJ5RMv/hyBP6NOoyELIksZNDDrcbYZD5px7pol2/lotXeXRoltZjAeo_5TaEpBvioL3gwVWf/KG6NQafSDERHnRJdsIPACZJrtRYIZY_E/HkmZEmdZgaI.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGRaRlEtER_57/YG7iCe1EJtZKvTgKeH6aatCEvnq3KBa0/yOkzDwpgwKd9K2Z2faR7HfMG7uorWU-i/rPRMwepN8zLC45-4UZjTvcOg1c6jgHU1/gvxB6SuMk5ycaoz5TTr0Vm6GvI2gwdQi/l5EXY6kd9tx1D1juEjlJooC7-S_XVGXp/msFMCiqy4Ro1xzzEvovDvg2a8bD9SfRb/X25jfJ-FDg3gImZEDrQRNZJwDP4iLKSm/bTV5VVcDUAcU94zDUG8eVZQxLrvU_pPN/xxVTAf8HsTw.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGeFIPL9OCxYP/Z4l19z-gZXQUffuxkK5n8k0qRmvIlHEy/WvT3r9HwQm3bu3Ih4mlwpWQ_DFTnrBVP/zBmi5oIb-33Vv5gMNDChmrFep3H2kEaq/HMZQxvQ9lFtbXfOwrE3hHmUPXH4jOwKI/188-1O9jZZcw9W1kxDCEQT6pk7Cu2DmI/p-lRNv89q7bo0UEEORdXv4a4EPn72t0j/4C9izeZNCdbnf1jaKeKgk7bYFLdnUZ4C/DA0miiPiD5zXjxmVppu1Ox-lA_dV-jwh/-eBevQ_FraA.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGayEfZ0UAHWk/QMtS6h5oxDuj3i89bErp9MfdIk524GKT/LzSfJjKZAGcmKJXYpIgx57UBZ-g4Pokk/ZxLcpow5L0gaki1C38fipC4rOTuZagYy/LS5LGiJ6q7l8WZKf5wF_DklwHNaVRmev/J-g61gT_0AY5aeVtlqyAeC-ESBbtazKs/LSalSjALYfjB7JYUMdupUq2PNiP996wg/NERxi-iu5IqiZoDcl2b5fuohqcQm2DkP/EyS1aQBF4Dmcxa5ZrONRFcQhMwGEdNrX/wWY-mbus4es.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGRTMdyBynrRc/hyHUWaxx0u26HrKUN6fV4ByYAZI5vbAY/xEDj0t6udkL8dL_4TpwZsHaPZVxy9DOF/5PzqCL7gcwHsG6NeyR6C7idyWuZIgYNK/d4pKSpdVa3nX6sGotAhhe6A3FuQlCoyC/apvR3XMYJJ-w3U-fqX6iXO2ZtqAb8c-1/ndM3-_sJPJrgYMhlYT9MbdfmrUKWawJc/-XBF3u3OvZCFn4kEWedoKh0IBkFQdO1P/O5WZq6QzG0CBu8t5ZgRl4gpkFHNB1tD_/VIbV-ssFQ68.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGVrfZWw7Sj7G/puccld9U2fzHVV8PegaQaCde4qPLupvT/NawA1T_6NSLizb_ql8fQzgi4YmeLnWCz/Tn40fqMdeMvbaehFGpBvS69HGtgVI49n/i31np68PNQKZgZX1mY3mZDGW1a5AVVS9/6rK0M6g4UbiE_DJF4fAINRKhfodyPHaj/HCwmQOA-yMwBMb-d-UU7ONB494Vc61rH/Y0fqq9SdumjewkkR6N1etNtmMKGL3BR2/rf5hE-p7sGZhPbH0SOySynNByl2qLAmg/OcySyg1ewik.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGTE9YjoFnoGG/gn0eeTYJ41vjH8G6IqT9suQS6RzrijFH/kfEZ2mSpR8wRND7jQjJpr7SUnB19Q3Yk/CoP05y3xDE0G5UYA1aeDGiP2J8MZ73fK/v4cWGAkjp7lwynu2oyLHjocD28N8vnVV/wzQAtmGLdaPJ9LFJ7TxZebulsJxJKU4H/kFw5TeXjEWYqqBaUBasLpN6I_NMwH_Fm/wznIny4VrlRaiOLIHB5o9d7sfQakZ21A/fCHyETbgJcRtiLwv7SO7ci7CMcpnIcpz/00iqYqbsGsE.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGVYOQRg8ktka/gGxENhSvrEnqFVt7RGsiaAV_OhhErMpZ/ecbz09bFZ2zvmx9SvNwe1T95lZ4F6h35/YVERGH01_GHoQAD-ZEo-MdzHtBdnMi1E/vTg_UI7YgYrzw0Hu-qoUbP5qHjAaZlIE/O697gQS00UbyS65WnjVz5jyNpOn561DC/8hk95nqAH1NndStXlN_qhUXwRttlKU1c/cd0RqiQqoXIL5Fyx7dahNFDNfxlp87h9/b5fAO0KGQcSmpERT1sAtg8yj0Onkn-vi/q8qW_JSBLGw.jpg",
+        },
+        {
+          type: "title",
+          value: "Прихожая",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGXb5mcaujJ94/c2YD9hjMZdRKuPq5WbCrykvqc06EM-11/fxxVI1tR0E45M0o0ilOmO7CT8h7XXRh3/eneWyFsIX-i5tXPMu6ZtR7nTShYVQHu0/MbyR7CBTDNSBqtVm7QqR8TYLB468zMtT/TIaHc6xiVeegtOjHt8bsIsrrMvnnGngL/zYCs5yqoxlUzCr5S3Dq3A5Jvw5O3PWDB/35jdbUPYIBT5ZMZ9Slm8XaPQbYlf1V0L/PaN1XNm5264csmX-SKbg8I_1IntY2jRq/Ckav49EMq9A.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGZA0_1Joo9BU/6xipMQk1giH4DtOkCylxsV3u05ZNJhNV/VlFxdzpB9V6YNNIOTz_dV43iMX0sWp2_/XHYLaJQtaYwL3vhEjEmJEtMDmtJ1laMi/OpS5NFGkn9ZhUrPXMhh0xr3OXmlTn6st/OJ0ip42VxetQxETLjWocDuViVKrHBnTG/bwUA0n-oq9ztXExyNn-yc1ftqZHLBxWQ/hOVCor3QvRfHUqQ5DpwlFpc2cihMu12J/y7etQk3B3yz0J7kwCa81hH0LZyzE5Pw8/k1kjg6F058w.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGZVSkEoVQlnc/__kINqdiaXNryaLD_s0jf6S4Sy5r7vnG/1e9jnFJL84rYJ23QqOobQIux8DDej5Ve/SFvjC_CWPzXT7Bpa2e2OIh8QZIl4B-rI/RoWe2t1bi92FGGb0Mxn0FMRwfX62Isnr/XGmwPJ9AYevriEkbD8atddy_VNWCQaYS/3VDY9ymkTe4Fq3xey1UvlL7DjRhMd2KY/9OGErTlMFYQqJknW-p4UmcHH-ZvU9-_f/IypoGVG5bcWy4fc52Tzqrt4EkPaCmIVP/_KvyRa79cBQ.jpg",
+        },
+        {
+          type: "title",
+          value: "Туалет",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGWqlJ-NUA1TA/HBEwAf5hHqpxdfL_z7-6kjhW44wCrip5/C32J0NbNw211kcYGsrpchccKcEIcCmj2/GbSNYRoxOHKd-WDFMjFbnYL6j6wVrNpa/2hdLnA7VCAB6u1RyIjn5bTF8FvEJqYT9/2PMNli7j-4mXSk7dT_kcg4ZxEI3Cc3Ac/QX9-P7RI4eWmpiaeAQjgGozCUSilIOo1/TfSWyHrhNYyoI9hXMNv2vzf8VTQFLH2c/8c_A1S1rOg-C5YqryyNyHS0A8Euv8iqY/R3a05oQ52WA.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGSXWNRrYszmp/wdHXNGUUJJ66TpXQEB0crkylZ3FhoE98/_2YZK2JkrGN3ITzIMtQEfosP0Muc2OuK/sz8OqynUa6nJOoshQxpoUJkRSK_bECZ0/W72GRwS3lttEQ4WD4XxvduH6cAPhGyiL/wxBi2V9TkF-KJKUeHvJ7v1z4OXS-ZnxS/foYqO39WITJB4yvba0yUxGKNYft-OJA-/ldSOevezVXBD3hxbS6roYHxno6zF5JqR/MSWlzYlYfMoKJrCM5ZdFUWfgJu_6m-Xq/JHw79iCqqlk.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGUG1K3pmKRUn/5OeZoQouvujCdvkPAhwvk3rOnWWdPmIH/YgFU01C28-KEiCmlmJhRzC76LyeTek_t/jJ_C01pjZRTXm1H2tt7BOY5q5uDOghPV/n31zjXh5mrD2igmwl8p6lhNWWh6lZnZR/fSHDb47fhpeRCmqe5hyyoP9nfp-mzLDw/jcsjYvE78ZNiVVbinjOuhHXRjBD4Zd0L/J8eCiJPLMiuum7qaiQTye1sqm15arbmx/7UeZdlH22UvWxxnGQ1MAsL3BP7w6RClG/lzMQqk51Jck.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGbyOccnSIGMS/Eg7OMJdHuuYcQLnSu_Oc9hjI-8zEePmK/jtALLdVtipjLd-XJWKMC0ce7A4DvH0KS/0lMQUP_Wok8oWXc4AZHZi2jyJjgnjfU8/9YrS8GFnOrBWlHyzEdI27PeViEt_yceK/-Ir6FSingITUyEp50Lq49A5mbHA_kod7/RmDL1uB1dvngp2aSHT9oP4i5t4E3YouE/DG2T6UyJlIsl8gZ9l-wv6fMk8wJy09Iz/oh_2HugUguHzFoocNHG5BFQzZwYsQ5sS/ofvdaa9mNU0.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGTucIBJgmSSs/SNKvTecfYEMEKQkarSsLUKssff9PtkjQ/IEw8UEt-OkU3dKiY9BoGc8_0znRyPD6A/VoD46G7Qru_4BGTrFWxYuNmW0Iu2EwRX/1D8VHSgukC6f-mluAZFMeu7oySB9_WlG/xPaz2zU40P_fn5r_Y6gquLYImezHwVc-/4aBiPt_6oCjD57Hq0HuegoPdJ2T0impy/rK62W5YrDUF_yTAxK-OE-fvPtrLltuLD/y-jtFtYmCfRxsELrFbWGK1fRkwEhMpUl/4EL00Elc5x8.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGZrQIcRlD2zE/XUkBIylxOv7PLpkxbn9CMBGp7pcAEWDn/T7672n3e5n8QW3if_-uuF3EN0pL3_o_g/L7XoSCaWACkEFd55eq8D5-79MRfAHTj4/jXyd-vdFfdeQwCpcc8h9Q9hyJFCEopw1/hAELfkxEbv6QnOzY-lNpBhWMYzhaJSlQ/dIilgLJzvFg6kcN43RZDaJBMJer_Aers/i5w6ze8hOElrRHg1VIr0qMI1aw3_pNtG/xeCQ0-1CKz_qYiRSDNO4-mun_fRcLfGu/tN8Bfmiv3pQ.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGdnTdJEhUlq0/iXipI_5prs1PjFVijO4tYYz9g4guhrdL/zhdd-c00T5pectUxVINfvEg3FcJXUsEA/Z6KEoMF_nUfXcepJ9MLMpsZwhjKUAfnb/gUbXiXDeL11vgqHBt-Oxw_h292o8dkbI/WuODqaSHKlUF1P_4my0PkyXEieAbu5dO/mpDZCurXeY2mY2YfbiYRf-pijxkLbuoy/dUwSHnASsolmcJt256FifnWQnA4nOixM/C2PUvJSU1JbfnpGKFGEole3gunJMpRuI/WIJ8RQNTbJY.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGfL9_86zqenZ/ZS6qBgFQ3dWjb4lEsUxsRRTe5ISpRYbi/XeKOADeKlo2yz51WWQWTGAVXpolKPdTr/tqaJgLoFHVKCJsuFqCqCXjl4QTrOMxVu/daocVb7s18_Fqy0VpQTM4XGnPWXWg2dT/jvT-s1s1aXoAtkXdePkNf-5hJuKFrNmX/hcBShtiREj00Ek2j6FyModGwEbGeuLjL/Jw5mYaSYD8tHS7nXtdksvXC1mUPG0wjI/2gCg0Lsji8Yf37GT4gmNMtzb9hlGpIYK/X0SDBYyBlGY.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGTkPBic4D8hI/UO1uxxLqrZ_mnX7v7VBVkRrfYL93grxd/ZuPVPFIBW5E5TtNQ6p3u96_cmaGVrziX/nr_eJLrGCfz_5f22oidUtFpRp2ArWBzH/uXK3l_huxApvM2Lj5w-mgcfq8yIzKwYy/G9N-AFUqb5ibEuDkjomJqUfHUSyVt2bV/1RamJCXXQZwt4FLGBRUlE65fbBwwze5N/wBI8FmKt4PZUWrpxZNSXEzylMPMheI0r/RECDbUUGmI7bbrW7ydwZ6zcfDQovq-vb/p8hBUYdN2-0.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGWomI7a1T88C/nVh8tQdhFDikJgvOiUa5UqIHKwIzoqwt/l8VJg4opWl_GR9B5cQULQ2ofzPwQ5hxi/x6kbnmJUSlCtUqKTjKRVVIij1FM4MDO8/zc5pEb3v3jcz4efaaYK9NFHNyeqgWsTb/1SxXF6mhHpl0VCp54DyCqyww54P_askv/HSunmGCi8BYbcm1sFtvyUY-zq6Xdv27F/j-NwYbAHHHpNKqA0uDRvNtAfA70850fT/J4WqVUqdgCZZlj1wV3qUqYdIshi3_fwy/x-nkDDH_OI4.jpg",
+        },
+        {
+          type: "title",
+          value: "Балкон",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGekVOALUN92l/gcXSCCkkjnwAZEPIg65lnBw4gSA5xT9o/3PiiUXbN4UwWYlJXzmTOcNn7VthlgrIT/_kLE1Q_QswX2WZULFvK6k1g0Xog3dcwR/0OJV-1HI6cR3Tb5i4OuS2_tFzEBw5BEx/jBajepucIOarBVFByYpQ1MULainlS7qs/4_XAPEREi4hrMhccZt4qRpEDWYu5z9lT/jNSxjZnb8ITX0PMmqTuTR63hc7Jbo5Ps/K5s--mZGVfQKqnMi1m3fwPKcgMI3TBe0/KRshGXAvvkA.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "img-edit/Photo-zoom.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGVzUdWS8JzAv/pB3FBrXvAqF-W2bgwemZnK61ffgChRH-/k5UvJUN4RoNkIMUnjqccFQwz9xYpS-12/B8lPspI1PObFSCjCs6tgPPl-TgRYwcKt/2ymFNFme35C0CzdRYvIQQT0uCyUw0ko_/5mZxqcS2sKt5s2MFrrnO-rWP1i0tlrYA/2z2i1VTuOqFmERZaYLeCl7ANYA9IzGf5/hKV6pBR1IIn_qHxs0lYqwN4XEGm57eDV/xLbeJ342nbiiKPEesFslEybKRJaiHpP1/dw_X46a7rJE.jpg",
+        },
+        {
+          type: "image",
+          value:
+            "https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysOwZ5ppzwWD-U/3xE7Ik44Yjqhk_JEy-q2uVtvyRuwD_n5/R1TrWsjiSkH5uZEmOh9rZD-CY6jDCc11/1pAhiq62L-Jmknhoh_BVgQ-hRR5ei96L/BQTjLfcOO1ilD49M1I-RGURqxEEn3jiS/0Lbe_SFpy-K8wMcmOhnNLj6L-6kJ4850/HSdVhc2394u6MxvkekQqgeLn91lLvtL-/xU_ILtHy-48mCk3g5HJ0b7H7XSJqanAK/y6NRCWlR0bp753FAEGAYsyS2um4OS2Rj/IpLcB-wMxu0PHAXfz8ccV8HSv1-BzyrF/dVBMPwkadGyt_VLkV4VU2AvM83cOUfSV/5j5YfgqKOppe3uzEmDv7Vj-O9S1HPDCh/VDcoL4SdUEf7MbtfkywMRWmGG2v-1hkA/SxTK2WTOCpI.jpg",
+        },
+      ];
+
+      const formats = [
+        {
+          title: "realt24.uz список",
+          fit: "cover",
+          wrapperCSS: "aspect-ratio: 1.78; width: 390px;",
+        },
+        {
+          title: "realt24.uz карточка мобильная",
+          fit: "cover",
+          wrapperCSS: "aspect-ratio: 375/302; width: 390px;",
+        },
+        {
+          title: "realt24.uz карточка десктоп",
+          fit: "contain",
+          wrapperCSS:
+            "aspect-ratio: 1.776; width: 746px; background-color: #e7e7e7",
+        },
+        {
+          title: "Airbnb listing",
+          fit: "cover",
+          wrapperCSS: "aspect-ratio: 1.052; width: 320px;",
+        },
+      ];
+
+      // Function to create table header
+      function createTableHeader() {
+        const headerRow = document.createElement("tr");
+
+        // Add image number header as first column
+        const numberHeader = document.createElement("th");
+        numberHeader.textContent = "#";
+        headerRow.appendChild(numberHeader);
+
+        // Add original image header
+        const originalHeader = document.createElement("th");
+        originalHeader.textContent = "Original";
+        headerRow.appendChild(originalHeader);
+
+        // Add format headers
+        formats.forEach((format) => {
+          const formatHeader = document.createElement("th");
+          formatHeader.textContent = format.title;
+          headerRow.appendChild(formatHeader);
+        });
+
+        document.getElementById("tableHeader").appendChild(headerRow);
+      }
+
+      // Function to create image wrapper with specified styles
+      function createImageWrapper(src, format = null) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "image-wrapper";
+
+        if (format && format.wrapperCSS) {
+          wrapper.style.cssText = format.wrapperCSS;
+        } else {
+          // Default styles for original image
+          wrapper.style.cssText = "width: 500px;";
+        }
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Photo";
+
+        if (format && format.fit) {
+          img.style.objectFit = format.fit;
+        } else {
+          img.style.objectFit = "cover"; // Default for original
+        }
+
+        wrapper.appendChild(img);
+        return wrapper;
+      }
+
+      // Function to populate the table with photos
+      function populatePhotoTable() {
+        const tableBody = document.getElementById("photoTableBody");
+        let imageCounter = 0; // Counter for image numbers
+
+        photos.forEach((rowData, index) => {
+          const row = document.createElement("tr");
+          row.className = "photo-row";
+
+          if (rowData.type === "title") {
+            const titleCell = document.createElement("td");
+            titleCell.colSpan = formats.length + 2; // Span all columns (including number column)
+            titleCell.textContent = rowData.value;
+            titleCell.className = "title-cell";
+            row.appendChild(titleCell);
+            tableBody.appendChild(row);
+            return;
+          }
+
+          // Increment image counter for actual images
+          imageCounter++;
+
+          // Add image number cell as first column
+          const numberCell = document.createElement("td");
+          numberCell.textContent = imageCounter;
+          numberCell.style.fontWeight = "bold";
+          numberCell.style.color = "#666";
+          row.appendChild(numberCell);
+
+          const photoSrc = rowData.value;
+          // Add original image cell
+          const originalCell = document.createElement("td");
+          originalCell.appendChild(createImageWrapper(photoSrc));
+          row.appendChild(originalCell);
+
+          // Add format cells
+          formats.forEach((format) => {
+            const formatCell = document.createElement("td");
+            formatCell.appendChild(createImageWrapper(photoSrc, format));
+            row.appendChild(formatCell);
+          });
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Initialize the gallery when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        createTableHeader();
+        populatePhotoTable();
+      });
+    </script>
+  </body>
+</html>
